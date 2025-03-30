@@ -63,7 +63,7 @@ function formatTime(time: number) {
 
 onMounted(() => watch(() => props.src, (newSrc) => {
   if (audio.value) {
-    audio.value.src = newSrc
+    audio.value.src = newSrc || ''
     currentTime.value = 0
     duration.value = 0
     isPlaying.value = false

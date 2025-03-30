@@ -15,17 +15,22 @@ const props = defineProps({
   modelValue: Number
 })
 
-const hasBeen = ref<HTMLElement>(null)
-const thumb = ref<HTMLElement>(null)
-const daddy = ref<HTMLElement>(null)
+const hasBeen = ref<HTMLElement | null>(null)
+const thumb = ref<HTMLElement | null>(null)
+const daddy = ref<HTMLElement | null>(null)
 const dragging = ref(false)
 
 const emit = defineEmits(['update:modelValue', 'valueChanged'])
 
-onMounted(() => watch(() => props.modelValue, (value: number) => {
+onMounted(() => watch(() => props.modelValue, (value) => {
+  if (value === undefined) return;
   const percent = ((value - props.min) / (props.max - props.min))
-  hasBeen.value.style.width = `${percent * daddy.value.clientWidth}px`
-  thumb.value.style.left = `${(percent * (daddy.value.clientWidth - 4)) - 8}px`
+  if (hasBeen.value && daddy.value) {
+    hasBeen.value.style.width = `${percent * daddy.value.clientWidth}px`
+    if (thumb.value) {
+      thumb.value.style.left = `${(percent * (daddy.value.clientWidth - 4)) - 8}px`
+    }
+  }
 }, {immediate: true}))
 
 function startDrag(event: MouseEvent) {
@@ -36,7 +41,7 @@ function startDrag(event: MouseEvent) {
 }
 
 const updatePosition = (event: MouseEvent) => {
-  if (!dragging.value) return
+  if (!dragging.value || !daddy.value) return
   const rect = daddy.value.getBoundingClientRect()
   const percent = Math.min(Math.max(0, event.clientX - rect.left), rect.width) / rect.width
   const value = props.min + percent * (props.max - props.min)

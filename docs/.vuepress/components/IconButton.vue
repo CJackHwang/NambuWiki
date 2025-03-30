@@ -94,7 +94,9 @@ defineProps({
 
 .icon {
   -webkit-mask-size: contain;
+  mask-size: contain;
   -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .icon-button.disabled > .icon {
