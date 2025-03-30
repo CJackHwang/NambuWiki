@@ -1,4 +1,4 @@
-# 南武文库 (Nambu Bunko)
+# 南武文库
 
 ::: danger 法律与内容免责声明 (Legal & Content Disclaimer)
 
@@ -23,6 +23,9 @@
 ::: tip 南武文库NEXT
 **昂首迈向新征程 (Forging Ahead onto a New Journey)**
 :::
+::: tip APP客户端下载
+[点击跳转](https://nambu-gov.my.canvasite.cn/app)
+:::
 
 ## 欢迎来到南武文库
 
@@ -37,5 +40,4 @@
 *   **[南武文学](./novels/)** - 感受被赋予“人民的文学馆”使命、体现官方文艺方针的作品概览。
 
 我们希望南武文库能为您展现一个独特而引人思考的虚构设定。请谨记本站内容的**纯粹虚构**性质。
-
 祝您浏览愉快！
