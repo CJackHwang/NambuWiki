@@ -9,6 +9,7 @@ import IconButton from './components/IconButton.vue'
 import TextButton from './components/TextButton.vue'
 import ChatView from './components/ChatView.vue'
 import Slider from './components/Slider.vue'
+import SectionOverview from './components/SectionOverview.vue'
 
 const theme: Theme = {
   ...DefaultTheme,
@@ -18,6 +19,8 @@ const theme: Theme = {
     app.component('TextButton', TextButton)
     app.component('ChatView', ChatView)
     app.component('Slider', Slider)
+    // Expose overview block for use in Markdown or custom layouts
+    app.component('SectionOverview', SectionOverview)
   }
 }
 

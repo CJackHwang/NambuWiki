@@ -411,22 +411,26 @@ html.dark .VPDocAsideOutline .content .active a { color: var(--primary); }
 .vp-doc .copy:active { background-color: var(--c-pressed-on-surface); }
 html.dark .vp-doc .copy { background-color: var(--surface-container-highest); border-color: var(--outline-variant); color: var(--on-surface-variant); }
 
-/* Blockquote */
+/* Blockquote uses global palette consistently */
 .vp-doc blockquote {
   background-color: var(--c-bg-light);
   color: var(--c-text);
-  border-left: 4px solid var(--primary);
-  border: 1px solid var(--outline-variant);
+  border-left: 3px solid var(--c-border);
+  border: 1px solid var(--c-border);
   border-radius: var(--shape-medium);
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.9rem;
 }
-html.dark .vp-doc blockquote { background-color: var(--c-bg-dark); color: var(--c-text); }
+html.dark .vp-doc blockquote {
+  background-color: var(--c-bg-dark);
+  color: var(--c-text);
+  border-color: var(--c-border);
+}
 
-/* Wikipedia-like table style */
+/* Wikipedia-like table style with global border */
 .vp-doc table { width: 100%; border-collapse: collapse; border-spacing: 0; }
-.vp-doc table { background-color: var(--surface-container); border: 1px solid var(--outline-variant); }
-.vp-doc table th, .vp-doc table td { border: 1px solid var(--outline-variant); padding: 0.4rem 0.6rem; }
-.vp-doc table thead th { background-color: var(--primary-container); color: var(--on-primary-container); font-weight: 700; border-bottom: 2px solid var(--primary); }
+.vp-doc table { background-color: var(--surface-container); border: 1px solid var(--c-border); }
+.vp-doc table th, .vp-doc table td { border: 1px solid var(--c-border); padding: 0.4rem 0.6rem; }
+.vp-doc table thead th { background-color: var(--primary-container); color: var(--on-primary-container); font-weight: 700; border-bottom: 2px solid var(--c-border); }
 .vp-doc table caption { caption-side: top; text-align: left; padding: 0.3rem 0; color: var(--on-surface-variant); }
 
 /* Zebra striping with MD3 surfaces */
@@ -463,6 +467,15 @@ html.dark .VPLocalSearchBox input { background-color: var(--surface-container); 
 .vp-doc a:visited,
 .vp-doc a:active { color: var(--c-text-accent); text-decoration: none; }
 .vp-doc a:hover { color: var(--c-brand-light); text-decoration: underline; }
+
+/* Typography scale closer to Wikipedia */
+.vp-doc p, .vp-doc li { font-size: 16px; line-height: 1.75; color: var(--c-text); }
+.vp-doc h1 { font-size: 2rem; line-height: 1.3; margin: 0.4rem 0 0.6rem; }
+.vp-doc h2 { font-size: 1.6rem; line-height: 1.35; margin: 0.8rem 0 0.4rem; }
+.vp-doc h3 { font-size: 1.3rem; line-height: 1.4; margin: 0.6rem 0 0.3rem; }
+.vp-doc h4 { font-size: 1.1rem; line-height: 1.4; margin: 0.5rem 0 0.25rem; }
+.vp-doc ul, .vp-doc ol { margin: 0.4em 0 0.4em 1.6em; }
+.vp-doc li > ul, .vp-doc li > ol { margin-left: 1.4em; }
 
 /* Footer */
 .VPFooter { background-color: var(--c-bg); border-top: 1px solid var(--c-border); color: var(--c-text-light); }
