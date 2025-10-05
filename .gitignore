@@ -5,6 +5,12 @@ docs/.vuepress/.cache
 # VuePress 默认构建生成的静态文件目录
 docs/.vuepress/dist
 
+# VitePress 构建与缓存目录
+docs/.vitepress/dist
+docs/.vitepress/cache
+
+# macOS 与 IDE
+.DS_Store
 .idea
 
 node_modules
