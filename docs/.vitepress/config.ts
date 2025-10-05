@@ -70,17 +70,35 @@ export default defineConfig({
 function buildNav() {
   // 自动从 docs 下的一级目录生成导航（含首页）
   const nav: { text: string; link: string }[] = [{ text: '首页', link: '/' }]
+  const items: { text: string; link: string }[] = []
   const topDirs = fs.readdirSync(DOCS_ROOT, { withFileTypes: true })
   for (const d of topDirs) {
     if (d.isDirectory() && !d.name.startsWith('.')) {
+      // 将 history 归入 Wiki，不在顶级导航中单列
+      if (d.name === 'history') continue
       const indexMd = path.join(DOCS_ROOT, d.name, 'index.md')
       // 允许通过 frontmatter 隐藏目录，但标题一律采用文件夹名
       const fm = fs.existsSync(indexMd) ? parseFrontmatter(indexMd) : {}
       if (fm.hidden || fm.draft) continue
       const text = formatName(d.name)
-      nav.push({ text, link: `/${d.name}/` })
+      items.push({ text, link: `/${d.name}/` })
     }
   }
+
+  // 排序：wiki 优先，public 最后，其余按自然排序
+  const rank = (link: string) => {
+    if (link === '/wiki/') return 0
+    if (link === '/public/') return 9999
+    return 100
+  }
+  items.sort((a, b) => {
+    const ra = rank(a.link)
+    const rb = rank(b.link)
+    if (ra !== rb) return ra - rb
+    return cmpNatural(a.text, b.text)
+  })
+
+  nav.push(...items)
   return nav
 }
 
@@ -103,6 +121,7 @@ function buildSidebar() {
       sidebar[base] = groups
     }
   }
+  // 目录结构已迁移到 /wiki/history 下，不再需要合并逻辑
   return sidebar
 }
 

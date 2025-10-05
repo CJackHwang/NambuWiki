@@ -65,14 +65,19 @@ a:hover { color: var(--c-brand-light); }
 
 /* Light theme (default) */
 :root {
-  --primary: #8F4A4B;
+  /* brand tuned for better contrast and warmth */
+  --primary: #A24F50;
   --on-primary: #FFFFFF;
-  --surface: #FFF8F7;
+
+  /* neutralized surface backgrounds for cleaner feel */
+  --surface: #FFFCFB;
   --on-surface: #221919;
-  --surface-container: #FCEAE9;
-  --surface-container-highest: #F0DEDE;
-  --outline-variant: #D7C1C1;
-  --on-surface-variant: #524343;
+  --surface-container: #F6EDED;
+  --surface-container-highest: #EBDADA;
+
+  /* slightly clearer borders */
+  --outline-variant: #D0BEBF;
+  --on-surface-variant: #5E4F50;
 
   --state-layers-primary-rgb: 143, 74, 75;
   --state-layers-on-primary-rgb: 255, 255, 255;
@@ -83,7 +88,7 @@ a:hover { color: var(--c-brand-light); }
   --state-layers-on-surface: var(--state-layers-on-surface-rgb);
 
   --c-brand: var(--primary);
-  --c-brand-light: #B97B7C;
+  --c-brand-light: #C06F70;
 
   --c-bg: var(--surface);
   --c-bg-light: var(--surface-container);
@@ -279,22 +284,22 @@ html.dark {
 .vp-doc a { color: var(--c-brand); }
 .vp-doc a:hover { color: var(--c-brand-light); }
 
-/* Primary surfaces for hero/cards */
+/* Primary surfaces for hero/cards (softened) */
 .VPHome .VPHero, .VPDoc .container .content .VPCard {
-  background: var(--surface-container);
-  border: 1px solid var(--outline-variant);
-  border-radius: var(--shape-large);
-  box-shadow: var(--elevation-1);
+  background: var(--c-bg-alt);
+  border: none;
+  border-radius: var(--shape-medium);
+  box-shadow: none;
 }
 .VPHome .VPHero .name, .VPHome .VPHero .text { color: var(--on-surface); }
 .VPHome .VPHero .name span { color: var(--primary); }
 
-/* MD3 container variants on cards/hero */
-.VPHome .VPHero { background: var(--primary-container); color: var(--on-primary-container); }
-.VPHome .VPHero .name, .VPHome .VPHero .text { color: var(--on-primary-container); }
+/* MD3 container variants (reduce contrast, keep subtle) */
+.VPHome .VPHero { background: var(--c-bg-alt); color: var(--on-surface); }
+.VPHome .VPHero .name, .VPHome .VPHero .text { color: var(--on-surface); }
 .VPHome .VPHero .name span { color: var(--primary); }
-.VPDoc .container .content .VPCard { background: var(--secondary-container); color: var(--on-secondary-container); }
-.VPDoc .container .content .VPCard .text { color: var(--on-secondary-container); }
+.VPDoc .container .content .VPCard { background: var(--c-bg-alt); color: var(--on-surface); }
+.VPDoc .container .content .VPCard .text { color: var(--on-surface); }
 
 /* Wikipedia-like link behavior */
 .vp-doc a { color: #0645ad; }
@@ -302,25 +307,40 @@ html.dark {
 .vp-doc a:hover { text-decoration: underline; }
 .vp-doc a:active { color: #faa700; }
 
-/* Custom blocks (tip/warning/danger) to match original palette */
-.vp-doc .custom-block.tip { background-color: var(--c-tip-bg); border: 1px solid var(--c-tip); }
+/* Custom blocks (tip/warning/danger) — wiki-like, less boxy */
+.vp-doc .custom-block {
+  border: none;
+  border-radius: var(--shape-small);
+  padding: 0.6rem 0.8rem;
+}
+.vp-doc .custom-block.tip {
+  background-color: var(--c-bg-light);
+  border-left: 3px solid var(--c-tip);
+}
 .vp-doc .custom-block.tip .custom-block-title { color: var(--c-tip-title); }
 
-.vp-doc .custom-block.warning { background-color: var(--c-warning-bg); border: 1px solid var(--c-warning); }
+.vp-doc .custom-block.warning {
+  background-color: var(--c-bg-light);
+  border-left: 3px solid var(--c-warning);
+}
 .vp-doc .custom-block.warning .custom-block-title { color: var(--c-warning-title); }
 
-.vp-doc .custom-block.danger { background-color: var(--c-danger-bg); border: 1px solid var(--c-danger); }
+.vp-doc .custom-block.danger {
+  background-color: var(--c-bg-light);
+  border-left: 3px solid var(--c-danger);
+}
 .vp-doc .custom-block.danger .custom-block-title { color: var(--c-danger-title); }
 
 /* Outline (table of contents) */
-.VPDocAsideOutline { background: var(--surface-container); border-left: 1px solid var(--outline-variant); }
+.VPDocAsideOutline { background: transparent; border-left: 2px solid var(--c-border); }
+.VPDocAsideOutline .content { padding-left: 0.5rem; }
 .VPDocAsideOutline .content a { color: var(--on-surface-variant); }
-.VPDocAsideOutline .content a:hover { color: var(--primary); }
-.VPDocAsideOutline .content .active a { color: var(--primary); font-weight: 600; }
-html.dark .VPDocAsideOutline { background: var(--surface-container); border-left-color: var(--outline-variant); }
+.VPDocAsideOutline .content a:hover { color: var(--c-text-accent); text-decoration: underline; }
+.VPDocAsideOutline .content .active a { color: var(--c-text-accent); font-weight: 600; }
+html.dark .VPDocAsideOutline { background: transparent; border-left-color: var(--c-border); }
 html.dark .VPDocAsideOutline .content a { color: var(--on-surface-variant); }
-html.dark .VPDocAsideOutline .content a:hover { color: var(--primary); }
-html.dark .VPDocAsideOutline .content .active a { color: var(--primary); }
+html.dark .VPDocAsideOutline .content a:hover { color: var(--c-text-accent); }
+html.dark .VPDocAsideOutline .content .active a { color: var(--c-text-accent); }
 
 /* Elevation & shape on common containers */
 .VPNavBar { box-shadow: var(--elevation-1); }
@@ -503,3 +523,13 @@ html.dark .pager .item a { color: var(--on-surface); }
 
 /* KBD */
 .vp-doc kbd { background: var(--surface-container-highest); color: var(--on-surface); border: 1px solid var(--outline-variant); border-radius: var(--shape-small); padding: 0.15rem 0.35rem; box-shadow: var(--elevation-1); }
+/* Navbar link readability and states */
+.VPNavBar .VPNavBarMenu > a,
+.VPNavBar .VPNavBarMenu .VPNavBarMenuLink { color: var(--c-text); font-weight: 500; }
+.VPNavBar .VPNavBarMenu > a:hover,
+.VPNavBar .VPNavBarMenu .VPNavBarMenuLink:hover { color: var(--c-text-accent); }
+.VPNavBar .VPNavBarMenu .active { color: var(--c-text-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Navbar brand spacing and subtle elevation */
+.VPNavBar.has-sidebar .content { box-shadow: none; }
+.VPNavBar .title { letter-spacing: 0.2px; }
