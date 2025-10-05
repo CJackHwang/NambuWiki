@@ -1,3 +1,4 @@
+@@
 <template>
   <div class="audio-player" :class="{'use-margin-up':useMarginUp}">
     <audio ref="audio" @timeupdate="updateProgress"/>
@@ -96,3 +97,4 @@ onMounted(() => watch(() => props.src, (newSrc) => {
   color: var(--on-surface-variant);
 }
 </style>
+

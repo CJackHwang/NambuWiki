@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "types": ["vite/client"]
+  },
+  "include": [
+    "docs/**/*.ts",
+    "docs/**/*.d.ts",
+    "docs/**/*.vue",
+    "docs/.vitepress/env.d.ts",
+    "env.d.ts"
+  ]
+}

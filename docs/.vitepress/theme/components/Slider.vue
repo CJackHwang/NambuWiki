@@ -1,3 +1,4 @@
+@@
 <template>
   <div class="slider-container" ref="daddy">
     <div class="has-been" ref="hasBeen"/>
@@ -84,3 +85,4 @@ const stopDrag = () => {
   box-shadow: var(--elevation-1);
 }
 </style>
+

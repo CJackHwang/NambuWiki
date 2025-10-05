@@ -1,3 +1,4 @@
+@@
 <template>
   <div class="text-button"
        :class="[buttonStyle, {'disabled' : disabled}]"
@@ -57,8 +58,6 @@ const paddingHorizontal = computed(() => {
   cursor: pointer;
 
   overflow: hidden;
-
-  app-region: no-drag;
 }
 
 .text-button.disabled {

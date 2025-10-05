@@ -1,4 +1,38 @@
 import { defineConfig } from 'vitepress'
+import fs from 'node:fs'
+import path from 'node:path'
+
+// Resolve docs root relative to this config file
+const DOCS_ROOT = path.resolve(__dirname, '..')
+
+// 轻量 frontmatter 解析：读取文档首部的 --- 块并转为键值
+function parseFrontmatter(filePath: string): Record<string, any> {
+  try {
+    const raw = fs.readFileSync(filePath, 'utf-8')
+    if (!raw.startsWith('---')) return {}
+    const end = raw.indexOf('\n---', 3)
+    if (end === -1) return {}
+    const fm = raw.slice(3, end).trim().split('\n')
+    const obj: Record<string, any> = {}
+    for (const line of fm) {
+      const m = line.match(/^([A-Za-z0-9_]+)\s*:\s*(.*)$/)
+      if (m) {
+        const key = m[1]
+        let val: any = m[2]
+        if (val === 'true') val = true
+        else if (val === 'false') val = false
+        else if (!isNaN(Number(val))) val = Number(val)
+        obj[key] = val
+      }
+    }
+    return obj
+  } catch { return {} }
+}
+
+function cmpNatural(a: string, b: string) {
+  // 自然排序（数字感知），中文按本地比较
+  return a.localeCompare(b, 'zh-Hans-CN-u-nu-hanidec', { numeric: true, sensitivity: 'base' })
+}
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -6,10 +40,16 @@ export default defineConfig({
   description: 'NambuWiki 文档与设定集',
   cleanUrls: true,
   lastUpdated: true,
+  markdown: {
+    theme: {
+      light: 'material-theme-lighter',
+      dark: 'material-theme-darker'
+    }
+  },
   // 使用旧 VuePress 公共资源目录，保持 /images/* 路径兼容
   vite: {
     // 直接复用原 VuePress 静态资源目录（相对于 docs 根）
-    publicDir: '.vuepress/public'
+    publicDir: path.resolve(DOCS_ROOT, '.vuepress/public')
   },
   themeConfig: {
     logo: '/images/ic_nambu_docs.png',
@@ -22,115 +62,113 @@ export default defineConfig({
       copyright: '© NambuWiki Contributors'
     },
     socialLinks: [],
-    nav: [
-      { text: '首页', link: '/' },
-      { text: '历史 History', link: '/history/' },
-      { text: '百科 Wiki', link: '/wiki/' },
-      { text: '记忆 Memory', link: '/memory/' },
-      { text: '新闻 News', link: '/news/' },
-      { text: '小说 Novels', link: '/novels/' }
-    ],
-    sidebar: {
-      '/history/': [
-        { text: '总览', link: '/history/' },
-        {
-          text: '专题与时代',
-          items: [
-            { text: '九九建制特别专题', link: '/history/99_revolution' },
-            { text: '南武集团', link: '/history/nambu_group' },
-            { text: '香淳主义', link: '/history/kojunism' },
-            { text: '现代史', link: '/history/modern' },
-            { text: '古代史', link: '/history/ancient' },
-            { text: '战争', link: '/history/war' },
-            { text: '政党', link: '/history/party' },
-            { text: '特别行政区', link: '/history/special_zone' },
-            { text: '革命', link: '/history/revolution' }
-          ]
-        }
-      ],
-      '/wiki/': [
-        { text: '总览', link: '/wiki/' },
-        {
-          text: '纲要 GRAND',
-          items: [
-            { text: '联合主义南武共和国', link: '/wiki/grand/unionist_nambu_republic' },
-            { text: '南武集团', link: '/wiki/grand/nambu_group' },
-            { text: '集团领导法', link: '/wiki/grand/law_of_group_leadership' },
-            { text: '集团领导', link: '/wiki/grand/group_leadership' },
-            { text: '中央政府', link: '/wiki/grand/central_government' },
-            { text: '中央领导', link: '/wiki/grand/central_leadership' },
-            { text: '联合所有制', link: '/wiki/grand/united_ownership' },
-            { text: '南武大会', link: '/wiki/grand/nambu_congress' },
-            { text: '南武联合主义党', link: '/wiki/grand/nambu_unionist_party' },
-            { text: '南武联合主义军', link: '/wiki/grand/nambu_unionist_army' },
-            { text: '人民革命阵线', link: '/wiki/grand/nambu_peoples_revolutionary_front' }
-          ]
-        },
-        {
-          text: '人物 PEOPLE',
-          items: [
-            { text: '南武香淳', link: '/wiki/people/nambu_kojun' },
-            { text: '日向秋平', link: '/wiki/people/hinata_akira' },
-            { text: '山本碧羽', link: '/wiki/people/yamamoto_hakuha' },
-            { text: '林冬', link: '/wiki/people/hayashi_fuyu' },
-            { text: '久崎文国', link: '/wiki/people/hisazaki_fumikuni' },
-            { text: '砥匠纪和', link: '/wiki/people/togishi_norikazu' },
-            { text: '川井八三', link: '/wiki/people/kawaii_hachimi' }
-          ]
-        },
-        {
-          text: '其他 OTHERS',
-          items: [
-            { text: '伟大南武帝国', link: '/wiki/others/great_nambu_empire' },
-            { text: '南武共和国', link: '/wiki/others/nambu_republic' },
-            { text: '联合主义南武党', link: '/wiki/others/nambu_democratic_republican_party' },
-            { text: '香淳主义', link: '/wiki/others/kojunism' },
-            { text: '开日委员会', link: '/wiki/others/kaijitsu_committee' },
-            { text: '本部都', link: '/wiki/others/honbu_metropolis' },
-            { text: '系光', link: '/wiki/others/keikou' },
-            { text: '南武特区', link: '/wiki/others/nambu_special_zone' },
-            { text: '南武联合主义集团', link: '/wiki/others/takezuka_group' },
-            { text: 'Takezuka 国', link: '/wiki/others/takezuka_koku' },
-            { text: '南武之歌', link: '/wiki/others/song_of_nambu' }
-          ]
-        }
-      ],
-      '/memory/': [
-        { text: '总览', link: '/memory/' },
-        {
-          text: '制度与文档',
-          items: [
-            { text: '宪法', link: '/memory/constitution' },
-            { text: '党章', link: '/memory/party_constitution' },
-            { text: '南武设计', link: '/memory/nambu_design' },
-            { text: '集团领导法', link: '/memory/group_leadership_law' },
-            { text: '特别行政区法', link: '/memory/special_zone_law' },
-            { text: '推进计划经济建设', link: '/memory/further_promoting_construction_of_planned_economy' },
-            { text: '改革 Kaijitsu 领导体制', link: '/memory/reform_of_group_leadership_system_in_kaijitsu' }
-          ]
-        }
-      ],
-      '/news/': [
-        { text: '总览', link: '/news/' },
-        {
-          text: '新闻',
-          items: [
-            { text: '抗战七十七周年纪念', link: '/news/77th_anniversary_of_nambu_defense_war' },
-            { text: '香淳与二军政委会晤', link: '/news/kojun_meeting_with_second_army_political_commissar' }
-          ]
-        }
-      ],
-      '/novels/': [
-        { text: '总览', link: '/novels/' },
-        {
-          text: '南武朋克 Nambu Punk',
-          items: [
-            { text: '第一章', link: '/novels/nambu_punk/1' },
-            { text: '第二章', link: '/novels/nambu_punk/2' },
-            { text: '第三章', link: '/novels/nambu_punk/3' }
-          ]
-        }
-      ]
-    }
+    nav: buildNav(),
+    sidebar: buildSidebar()
   }
 })
+
+function buildNav() {
+  // 自动从 docs 下的一级目录生成导航（含首页）
+  const nav: { text: string; link: string }[] = [{ text: '首页', link: '/' }]
+  const topDirs = fs.readdirSync(DOCS_ROOT, { withFileTypes: true })
+  for (const d of topDirs) {
+    if (d.isDirectory() && !d.name.startsWith('.')) {
+      const indexMd = path.join(DOCS_ROOT, d.name, 'index.md')
+      // 允许通过 frontmatter 隐藏目录，但标题一律采用文件夹名
+      const fm = fs.existsSync(indexMd) ? parseFrontmatter(indexMd) : {}
+      if (fm.hidden || fm.draft) continue
+      const text = formatName(d.name)
+      nav.push({ text, link: `/${d.name}/` })
+    }
+  }
+  return nav
+}
+
+function buildSidebar() {
+  // 从 docs 下每个一级目录扫描其内容，自动生成分组与链接
+  const sidebar: Record<string, any[]> = {}
+  const topDirs = fs.readdirSync(DOCS_ROOT, { withFileTypes: true })
+  for (const d of topDirs) {
+    if (d.isDirectory() && !d.name.startsWith('.')) {
+      const base = `/${d.name}/`
+      const dirPath = path.join(DOCS_ROOT, d.name)
+      const groups = scanFolder(dirPath, d.name)
+      // 如果存在 index.md，则在最前面添加“总览”
+      const overviewPath = path.join(dirPath, 'index.md')
+      if (fs.existsSync(overviewPath)) {
+        const fm = parseFrontmatter(overviewPath)
+        const overviewText = fm.title || '总览'
+        groups.unshift({ text: overviewText, link: `/${d.name}/` })
+      }
+      sidebar[base] = groups
+    }
+  }
+  return sidebar
+}
+
+function scanFolder(dirPath: string, baseName: string, relPfx = ''): any[] {
+  const groups: any[] = []
+  const entries = fs.readdirSync(dirPath, { withFileTypes: true })
+
+  // 收集当前目录下的 md 文件
+  const mdFiles: { text: string; link: string }[] = []
+  for (const e of entries) {
+    if (e.isFile() && e.name.endsWith('.md') && e.name.toLowerCase() !== 'readme.md' && e.name.toLowerCase() !== 'index.md') {
+      const fileRel = path.posix.join(relPfx, e.name.replace(/\.md$/, ''))
+      const fullPath = path.join(dirPath, e.name)
+      const fm = parseFrontmatter(fullPath)
+      if (fm.hidden || fm.draft) continue
+      const fallback = formatName(e.name.replace(/\.md$/, ''))
+      const text = getFileTitle(fullPath, fallback)
+      mdFiles.push({ text, link: `/${baseName}/${fileRel}` })
+    }
+  }
+  if (mdFiles.length) {
+    mdFiles.sort((a, b) => cmpNatural(a.text, b.text))
+    const groupText = getDirTitle(dirPath)
+    const dirFm = getDirIndexFrontmatter(dirPath)
+    const collapsed = dirFm?.collapsed === true
+    groups.push({ text: groupText, collapsed, items: mdFiles.map(({ text, link }) => ({ text, link })) })
+  }
+
+  // 递归子目录，合并为更多分组
+  for (const e of entries) {
+    if (e.isDirectory()) {
+      const childDir = path.join(dirPath, e.name)
+      const childRel = path.posix.join(relPfx, e.name)
+      const childGroups = scanFolder(childDir, baseName, childRel)
+      groups.push(...childGroups)
+    }
+  }
+
+  return groups
+}
+
+function getDirIndexFrontmatter(dirPath: string): Record<string, any> | null {
+  const idx = path.join(dirPath, 'index.md')
+  if (fs.existsSync(idx)) return parseFrontmatter(idx)
+  return null
+}
+
+function getDirTitle(dirPath: string): string {
+  const idx = path.join(dirPath, 'index.md')
+  const fallback = formatName(dirPath.split(path.sep).slice(-1)[0])
+  return getFileTitle(idx, fallback)
+}
+
+function getFileTitle(filePath: string, fallback: string): string {
+  try {
+    if (!fs.existsSync(filePath)) return fallback
+    const raw = fs.readFileSync(filePath, 'utf-8')
+    const m = raw.match(/^#\s+(.+)$/m)
+    if (m) return m[1].trim()
+    return fallback
+  } catch { return fallback }
+}
+
+function formatName(name: string) {
+  // 下划线转空格，并按单词首字母大写；保留中文原样
+  return name
+    .split('/').slice(-1)[0]
+    .split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+}

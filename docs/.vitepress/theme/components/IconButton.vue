@@ -1,3 +1,4 @@
+@@
 <template>
   <div class="icon-button"
        :style="{minHeight : size + 'px' , minWidth : size + 'px'}"
@@ -115,3 +116,4 @@ defineProps({
   background-color: var(--on-surface)
 }
 </style>
+

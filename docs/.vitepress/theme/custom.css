@@ -1,0 +1,492 @@
+/* Migrated from VuePress styles.scss to VitePress custom.css */
+:root {
+  --motion-standard: 300ms ease;
+  --opacity-state-layers-008: 0.08;
+  --opacity-state-layers-012: 0.12;
+  --opacity-state-layers-016: 0.16;
+  --opacity-040: 0.4;
+
+  /* MD3 shape tokens */
+  --shape-small: 4px;
+  --shape-medium: 12px;
+  --shape-large: 16px;
+  --shape-xlarge: 28px;
+
+  --color-scrim-rgb: 0, 0, 0;
+  --color-shadow-rgb: 0, 0, 0;
+
+  --elevation-1: 0 1px 3px rgba(var(--color-shadow-rgb), 0.15), 0 1px 2px rgba(var(--color-shadow-rgb), 0.3);
+  --elevation-3: 0 4px 8px 3px rgba(var(--color-shadow-rgb), 0.15), 0 1px 3px rgba(var(--color-shadow-rgb), 0.3);
+
+  --code-bg-color: #282c34;
+  --code-line-number-color: #9e9e9e;
+
+  /* MD3 additional roles */
+  --primary-container: #F8E3E3;
+  --on-primary-container: #2E1516;
+  --secondary: #6F5B5B;
+  --on-secondary: #FFFFFF;
+  --secondary-container: #F1E5E5;
+  --on-secondary-container: #281F20;
+  --tertiary: #7C5E5E;
+  --on-tertiary: #FFFFFF;
+  --tertiary-container: #F3E1E1;
+  --on-tertiary-container: #2B1E1E;
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+  transition: background-color var(--motion-standard), border-color var(--motion-standard);
+}
+
+*:focus { outline: none; }
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'OPPO Sans Medium', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: var(--c-brand); text-decoration: none; }
+a:hover { color: var(--c-brand-light); }
+
+.title-small,
+.ryo-typography-label-large {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.1px;
+}
+
+/* Light theme (default) */
+:root {
+  --primary: #8F4A4B;
+  --on-primary: #FFFFFF;
+  --surface: #FFF8F7;
+  --on-surface: #221919;
+  --surface-container: #FCEAE9;
+  --surface-container-highest: #F0DEDE;
+  --outline-variant: #D7C1C1;
+  --on-surface-variant: #524343;
+
+  --state-layers-primary-rgb: 143, 74, 75;
+  --state-layers-on-primary-rgb: 255, 255, 255;
+  --state-layers-on-surface-rgb: 34, 25, 25;
+  /* compatibility for rgba(var(--...)) */
+  --state-layers-primary: var(--state-layers-primary-rgb);
+  --state-layers-on-primary: var(--state-layers-on-primary-rgb);
+  --state-layers-on-surface: var(--state-layers-on-surface-rgb);
+
+  --c-brand: var(--primary);
+  --c-brand-light: #B97B7C;
+
+  --c-bg: var(--surface);
+  --c-bg-light: var(--surface-container);
+  --c-bg-lighter: #FEF1F0;
+  --c-bg-dark: var(--surface-container-highest);
+  --c-bg-darker: #EAD7D7;
+  --c-bg-navbar: var(--surface);
+  --c-bg-sidebar: var(--surface);
+  --c-bg-arrow: var(--on-surface-variant);
+
+  --c-text: var(--on-surface);
+  --c-text-accent: var(--primary);
+  --c-text-light: var(--on-surface-variant);
+  --c-text-lighter: #716262;
+  --c-text-lightest: #918080;
+  --c-text-quote: var(--on-surface-variant);
+
+  --c-border: var(--outline-variant);
+  --c-border-dark: #C1AFAF;
+
+  --c-tip: #4CAF50;
+  --c-tip-bg: #E8F5E9;
+  --c-tip-title: #1B5E20;
+  --c-tip-text: var(--c-text-light);
+  --c-tip-text-accent: #2E7D32;
+
+  --c-warning: #FFA000;
+  --c-warning-bg: #FFF8E1;
+  --c-warning-bg-light: #FFF3CC;
+  --c-warning-title: #FF8F00;
+  --c-warning-text: #6D4C00;
+  --c-warning-text-accent: #E65100;
+
+  --c-danger: var(--primary);
+  --c-danger-bg: #FFEBEE;
+  --c-danger-bg-light: #FFCDD2;
+  --c-danger-title: #B71C1C;
+  --c-danger-text: #B71C1C;
+  --c-danger-text-accent: var(--c-danger);
+
+  --c-details-bg: var(--c-bg-light);
+  --c-badge-tip: var(--c-tip);
+  --c-badge-tip-text: #FFFFFF;
+  --c-badge-warning: var(--c-warning);
+  --c-badge-warning-text: var(--on-surface);
+  --c-badge-danger: var(--c-danger);
+  --c-badge-danger-text: var(--on-primary);
+
+  --c-hover-on-surface: rgba(var(--state-layers-on-surface-rgb), var(--opacity-state-layers-008));
+  --c-hover-primary: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-008));
+  --c-focus-on-surface: rgba(var(--state-layers-on-surface-rgb), var(--opacity-state-layers-012));
+  --c-focus-primary: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-012));
+  --c-pressed-on-surface: rgba(var(--state-layers-on-surface-rgb), var(--opacity-state-layers-012));
+  --c-pressed-primary: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-012));
+
+  --code-hl-bg-color: rgba(0, 0, 0, 0.05);
+
+  /* VitePress token mapping (light) */
+  --vp-c-brand: var(--primary);
+  --vp-c-brand-1: var(--primary);
+  --vp-c-brand-2: var(--c-brand-light);
+  --vp-c-brand-3: var(--c-brand-light);
+
+  --vp-c-text-1: var(--c-text);
+  --vp-c-text-2: var(--c-text-light);
+  --vp-c-text-3: var(--c-text-lighter);
+
+  --vp-c-bg: var(--c-bg);
+  --vp-c-bg-alt: var(--c-bg-light);
+  --vp-c-bg-soft: var(--c-bg-lighter);
+
+  --vp-c-border: var(--c-border);
+  --vp-c-divider: var(--c-border);
+
+  --vp-code-block-bg: var(--code-hl-bg-color);
+}
+
+/* Dark theme for VitePress: html.dark */
+html.dark {
+  --primary: #FFB3B3;
+  --on-primary: #561D20;
+  --surface: #1A1111;
+  --on-surface: #F0DEDE;
+  --surface-container: #271D1D;
+  --surface-container-highest: #3D3232;
+  --outline-variant: #524343;
+  --on-surface-variant: #D7C1C1;
+
+  /* MD3 additional roles (dark) */
+  --primary-container: #3F2A2A;
+  --on-primary-container: #FFE3E3;
+  --secondary: #C7B3B3;
+  --on-secondary: #2B1F1F;
+  --secondary-container: #362828;
+  --on-secondary-container: #EADADA;
+  --tertiary: #D7B8B8;
+  --on-tertiary: #301F1F;
+  --tertiary-container: #3E2D2D;
+  --on-tertiary-container: #F0DEDE;
+
+  --state-layers-primary-rgb: 255, 179, 179;
+  --state-layers-on-primary-rgb: 86, 29, 32;
+  --state-layers-on-surface-rgb: 240, 222, 222;
+  --state-layers-primary: var(--state-layers-primary-rgb);
+  --state-layers-on-primary: var(--state-layers-on-primary-rgb);
+  --state-layers-on-surface: var(--state-layers-on-surface-rgb);
+
+  --c-brand: var(--primary);
+  --c-brand-light: #FFD1D1;
+
+  --c-bg: var(--surface);
+  --c-bg-light: var(--surface-container);
+  --c-bg-lighter: #201616;
+  --c-bg-dark: var(--surface-container-highest);
+  --c-bg-darker: #4A3F3F;
+  --c-bg-navbar: var(--surface-container);
+  --c-bg-sidebar: var(--surface);
+  --c-bg-arrow: var(--on-surface-variant);
+
+  --c-text: var(--on-surface);
+  --c-text-accent: var(--primary);
+  --c-text-light: var(--on-surface-variant);
+  --c-text-lighter: #BBAFAF;
+  --c-text-lightest: #A09090;
+  --c-text-quote: var(--on-surface-variant);
+
+  --c-border: var(--outline-variant);
+  --c-border-dark: #3F3333;
+
+  --c-tip: #81C784;
+  --c-tip-bg: #1B311D;
+  --c-tip-title: #A5D6A7;
+  --c-tip-text: var(--c-text-light);
+  --c-tip-text-accent: #B9F6CA;
+
+  --c-warning: #FFC107;
+  --c-warning-bg: #332600;
+  --c-warning-bg-light: #44330B;
+  --c-warning-title: #FFD54F;
+  --c-warning-text: #FFEBC3;
+  --c-warning-text-accent: #FFECB3;
+
+  --c-danger: var(--primary);
+  --c-danger-bg: #381E1E;
+  --c-danger-bg-light: #4B2B2B;
+  --c-danger-title: #FF8A80;
+  --c-danger-text: #FFCDD2;
+  --c-danger-text-accent: var(--c-danger);
+
+  --c-details-bg: var(--c-bg-light);
+  --c-badge-tip: var(--c-tip);
+  --c-badge-tip-text: var(--c-bg);
+  --c-badge-warning: var(--c-warning);
+  --c-badge-warning-text: var(--c-bg);
+  --c-badge-danger: var(--c-danger);
+  --c-badge-danger-text: var(--on-primary);
+
+  --c-hover-on-surface: rgba(var(--state-layers-on-surface-rgb), var(--opacity-state-layers-008));
+  --c-hover-primary: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-008));
+  --c-focus-on-surface: rgba(var(--state-layers-on-surface-rgb), var(--opacity-state-layers-012));
+  --c-focus-primary: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-012));
+  --c-pressed-on-surface: rgba(var(--state-layers-on-surface-rgb), var(--opacity-state-layers-012));
+  --c-pressed-primary: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-012));
+
+  --code-hl-bg-color: rgba(255, 255, 255, 0.08);
+
+  /* VitePress token mapping (dark) */
+  --vp-c-brand: var(--primary);
+  --vp-c-brand-1: var(--primary);
+  --vp-c-brand-2: var(--c-brand-light);
+  --vp-c-brand-3: var(--c-brand-light);
+
+  --vp-c-text-1: var(--c-text);
+  --vp-c-text-2: var(--c-text-light);
+  --vp-c-text-3: var(--c-text-lighter);
+
+  --vp-c-bg: var(--c-bg);
+  --vp-c-bg-alt: var(--c-bg-light);
+  --vp-c-bg-soft: var(--c-bg-lighter);
+
+  --vp-c-border: var(--c-border);
+  --vp-c-divider: var(--c-border);
+
+  --vp-code-block-bg: var(--code-hl-bg-color);
+}
+
+/* Components relying on variables now work in VitePress */
+.vp-doc .audio-player { background-color: var(--surface-container); border: 1px solid var(--outline-variant); }
+
+/* Basic layout alignments with original theme */
+.VPNavBar { background-color: var(--c-bg-navbar); border-bottom: 1px solid var(--c-border); }
+.VPSidebar { background-color: var(--c-bg-sidebar); border-right: 1px solid var(--c-border); }
+.vp-doc a { color: var(--c-brand); }
+.vp-doc a:hover { color: var(--c-brand-light); }
+
+/* Primary surfaces for hero/cards */
+.VPHome .VPHero, .VPDoc .container .content .VPCard {
+  background: var(--surface-container);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-large);
+  box-shadow: var(--elevation-1);
+}
+.VPHome .VPHero .name, .VPHome .VPHero .text { color: var(--on-surface); }
+.VPHome .VPHero .name span { color: var(--primary); }
+
+/* MD3 container variants on cards/hero */
+.VPHome .VPHero { background: var(--primary-container); color: var(--on-primary-container); }
+.VPHome .VPHero .name, .VPHome .VPHero .text { color: var(--on-primary-container); }
+.VPHome .VPHero .name span { color: var(--primary); }
+.VPDoc .container .content .VPCard { background: var(--secondary-container); color: var(--on-secondary-container); }
+.VPDoc .container .content .VPCard .text { color: var(--on-secondary-container); }
+
+/* Wikipedia-like link behavior */
+.vp-doc a { color: #0645ad; }
+.vp-doc a:visited { color: #0b0080; }
+.vp-doc a:hover { text-decoration: underline; }
+.vp-doc a:active { color: #faa700; }
+
+/* Custom blocks (tip/warning/danger) to match original palette */
+.vp-doc .custom-block.tip { background-color: var(--c-tip-bg); border: 1px solid var(--c-tip); }
+.vp-doc .custom-block.tip .custom-block-title { color: var(--c-tip-title); }
+
+.vp-doc .custom-block.warning { background-color: var(--c-warning-bg); border: 1px solid var(--c-warning); }
+.vp-doc .custom-block.warning .custom-block-title { color: var(--c-warning-title); }
+
+.vp-doc .custom-block.danger { background-color: var(--c-danger-bg); border: 1px solid var(--c-danger); }
+.vp-doc .custom-block.danger .custom-block-title { color: var(--c-danger-title); }
+
+/* Outline (table of contents) */
+.VPDocAsideOutline { background: var(--surface-container); border-left: 1px solid var(--outline-variant); }
+.VPDocAsideOutline .content a { color: var(--on-surface-variant); }
+.VPDocAsideOutline .content a:hover { color: var(--primary); }
+.VPDocAsideOutline .content .active a { color: var(--primary); font-weight: 600; }
+html.dark .VPDocAsideOutline { background: var(--surface-container); border-left-color: var(--outline-variant); }
+html.dark .VPDocAsideOutline .content a { color: var(--on-surface-variant); }
+html.dark .VPDocAsideOutline .content a:hover { color: var(--primary); }
+html.dark .VPDocAsideOutline .content .active a { color: var(--primary); }
+
+/* Elevation & shape on common containers */
+.VPNavBar { box-shadow: var(--elevation-1); }
+.VPSidebar, .vp-doc .custom-block, .vp-doc pre, .vp-doc table { border-radius: var(--shape-medium); }
+
+/* Sidebar & Navbar interactive state layers */
+.VPNavBar a, .VPSidebar a {
+  position: relative;
+  border-radius: var(--shape-small);
+  transition: background-color var(--motion-standard), color var(--motion-standard);
+}
+.VPNavBar a:hover, .VPSidebar a:hover { background-color: var(--c-hover-on-surface); }
+.VPNavBar a:active, .VPSidebar a:active { background-color: var(--c-pressed-on-surface); }
+.VPNavBar a:focus-visible, .VPSidebar a:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(var(--state-layers-primary-rgb), 0.30); }
+
+.VPNavBar .menu .item.is-active > a,
+.VPNavBar .menu .item > a.router-link-active {
+  background-color: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-012));
+  color: var(--primary);
+}
+
+/* Sidebar active state closer to MD3 */
+.VPSidebar .items .item > a {
+  color: var(--on-surface);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--shape-small);
+}
+.VPSidebar .items .item.is-active > a {
+  background-color: rgba(var(--state-layers-primary-rgb), var(--opacity-state-layers-012));
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
+}
+
+/* Wikipedia-like content width and typography */
+.vp-doc {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
+  color: var(--on-surface);
+  margin-top: 1em;
+  margin-bottom: 0.4em;
+}
+.vp-doc h1 { font-size: 1.8rem; font-weight: 700; }
+.vp-doc h2 { font-size: 1.5rem; font-weight: 700; }
+.vp-doc h3 { font-size: 1.2rem; font-weight: 600; }
+.vp-doc h4 { font-size: 1.1rem; font-weight: 600; }
+.vp-doc h5 { font-size: 1rem; font-weight: 600; }
+.vp-doc h6 { font-size: 0.95rem; font-weight: 600; }
+.vp-doc p, .vp-doc li { font-size: 14px; line-height: 1.6; color: var(--c-text); }
+
+.vp-doc ul, .vp-doc ol { margin: 0.6em 0 0.6em 2em; }
+.vp-doc li > ul, .vp-doc li > ol { margin-left: 1.6em; }
+
+/* Inline code */
+.vp-doc code:not(pre code) {
+  background-color: var(--surface-container-highest);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-small);
+  padding: 0.15rem 0.35rem;
+}
+
+/* Heading anchors */
+.vp-doc .header-anchor {
+  color: var(--on-surface-variant);
+  text-decoration: none;
+}
+.vp-doc .header-anchor:hover { color: var(--primary); }
+
+/* Code blocks */
+.vp-doc pre {
+  background-color: var(--code-bg-color);
+  border: 1px solid var(--outline-variant);
+  box-shadow: var(--elevation-1);
+}
+.vp-doc pre code { background: transparent; }
+
+/* Code copy button */
+.vp-doc .copy {
+  background-color: var(--surface-container-highest);
+  border: 1px solid var(--outline-variant);
+  color: var(--on-surface-variant);
+  border-radius: var(--shape-small);
+}
+.vp-doc .copy:hover { background-color: var(--c-hover-on-surface); }
+.vp-doc .copy:active { background-color: var(--c-pressed-on-surface); }
+html.dark .vp-doc .copy { background-color: var(--surface-container-highest); border-color: var(--outline-variant); color: var(--on-surface-variant); }
+
+/* Blockquote */
+.vp-doc blockquote {
+  background-color: var(--c-bg-light);
+  color: var(--c-text);
+  border-left: 4px solid var(--primary);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-medium);
+  padding: 0.75rem 1rem;
+}
+html.dark .vp-doc blockquote { background-color: var(--c-bg-dark); color: var(--c-text); }
+
+/* Wikipedia-like table style */
+.vp-doc table { width: 100%; border-collapse: collapse; border-spacing: 0; }
+.vp-doc table { background-color: var(--surface-container); border: 1px solid var(--outline-variant); }
+.vp-doc table th, .vp-doc table td { border: 1px solid var(--outline-variant); padding: 0.4rem 0.6rem; }
+.vp-doc table thead th { background-color: var(--primary-container); color: var(--on-primary-container); font-weight: 700; border-bottom: 2px solid var(--primary); }
+.vp-doc table caption { caption-side: top; text-align: left; padding: 0.3rem 0; color: var(--on-surface-variant); }
+
+/* Zebra striping with MD3 surfaces */
+.vp-doc table tbody tr:nth-child(odd) { background-color: var(--c-bg-light); }
+html.dark .vp-doc table tbody tr:nth-child(odd) { background-color: var(--c-bg-dark); }
+
+/* Buttons (generic VitePress buttons e.g., hero/actions) */
+.VPButton { border-radius: 100px; box-shadow: var(--elevation-1); }
+.VPButton.brand { background-color: var(--primary); color: var(--on-primary); }
+.VPButton.brand:hover { background-color: var(--primary); }
+.VPButton.brand:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(var(--state-layers-on-primary-rgb), 0.30); }
+.VPButton.alt { background-color: var(--surface-container-highest); color: var(--on-surface); border: 1px solid var(--outline-variant); }
+.VPButton.alt:hover { background-color: var(--c-hover-on-surface); }
+.VPButton.alt:active { background-color: var(--c-pressed-on-surface); }
+
+/* Badges */
+.VPBadge { border-radius: 999px; border: 1px solid var(--outline-variant); }
+.VPBadge.tip { background-color: var(--c-badge-tip); color: var(--c-badge-tip-text); }
+.VPBadge.warning { background-color: var(--c-badge-warning); color: var(--c-badge-warning-text); }
+.VPBadge.danger { background-color: var(--c-badge-danger); color: var(--c-badge-danger-text); }
+
+/* Search box */
+.VPLocalSearchBox input {
+  background-color: var(--surface-container);
+  color: var(--on-surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--shape-medium);
+}
+.VPLocalSearchBox input::placeholder { color: var(--on-surface-variant); }
+html.dark .VPLocalSearchBox input { background-color: var(--surface-container); color: var(--on-surface); border-color: var(--outline-variant); }
+
+/* MD3 link styling overrides (prefer brand palette over default) */
+.vp-doc a,
+.vp-doc a:visited,
+.vp-doc a:active { color: var(--c-text-accent); text-decoration: none; }
+.vp-doc a:hover { color: var(--c-brand-light); text-decoration: underline; }
+
+/* Footer */
+.VPFooter { background-color: var(--c-bg); border-top: 1px solid var(--c-border); color: var(--c-text-light); }
+.VPFooter a { color: var(--c-text-accent); }
+.VPFooter a:hover { color: var(--c-brand-light); }
+html.dark .VPFooter { background-color: var(--c-bg); border-top-color: var(--c-border); color: var(--c-text-light); }
+html.dark .VPFooter a { color: var(--c-text-accent); }
+html.dark .VPFooter a:hover { color: var(--c-brand-light); }
+
+/* Pager (Prev / Next) */
+.pager .item { background: var(--surface-container); border: 1px solid var(--outline-variant); border-radius: var(--shape-medium); }
+.pager .item a { color: var(--on-surface); }
+.pager .item:hover { background: var(--c-hover-on-surface); }
+.pager .item:active { background: var(--c-pressed-on-surface); }
+html.dark .pager .item { background: var(--surface-container); border-color: var(--outline-variant); }
+html.dark .pager .item a { color: var(--on-surface); }
+
+/* Details & summary (MD3 containers) */
+.vp-doc details { background-color: var(--surface-container); border: 1px solid var(--outline-variant); border-radius: var(--shape-medium); box-shadow: var(--elevation-1); }
+.vp-doc summary { cursor: pointer; padding: 0.5rem 0.75rem; color: var(--on-surface); }
+.vp-doc details[open] { box-shadow: var(--elevation-3); }
+
+/* Horizontal rule */
+.vp-doc hr { border: none; border-top: 1px solid var(--outline-variant); opacity: 0.8; margin: 1.25rem 0; }
+
+/* KBD */
+.vp-doc kbd { background: var(--surface-container-highest); color: var(--on-surface); border: 1px solid var(--outline-variant); border-radius: var(--shape-small); padding: 0.15rem 0.35rem; box-shadow: var(--elevation-1); }
