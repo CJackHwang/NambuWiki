@@ -7,9 +7,9 @@
   --opacity-040: 0.4;
 
   /* MD3 shape tokens */
-  --shape-small: 4px;
-  --shape-medium: 12px;
-  --shape-large: 16px;
+  --shape-small: 8px;
+  --shape-medium: 20px;
+  --shape-large: 28px;
   --shape-xlarge: 28px;
 
   --color-scrim-rgb: 0, 0, 0;
@@ -65,8 +65,8 @@ a:hover { color: var(--c-brand-light); }
 
 /* Light theme (default) */
 :root {
-  /* brand tuned for better contrast and warmth */
-  --primary: #A24F50;
+  /* brand tuned for steadier, subdued red */
+  --primary: #A84041;
   --on-primary: #FFFFFF;
 
   /* neutralized surface backgrounds for cleaner feel */
@@ -79,7 +79,7 @@ a:hover { color: var(--c-brand-light); }
   --outline-variant: #D0BEBF;
   --on-surface-variant: #5E4F50;
 
-  --state-layers-primary-rgb: 143, 74, 75;
+  --state-layers-primary-rgb: 168, 64, 65;
   --state-layers-on-primary-rgb: 255, 255, 255;
   --state-layers-on-surface-rgb: 34, 25, 25;
   /* compatibility for rgba(var(--...)) */
@@ -88,14 +88,15 @@ a:hover { color: var(--c-brand-light); }
   --state-layers-on-surface: var(--state-layers-on-surface-rgb);
 
   --c-brand: var(--primary);
-  --c-brand-light: #C06F70;
+  --c-brand-light: #C26061;
 
   --c-bg: var(--surface);
   --c-bg-light: var(--surface-container);
   --c-bg-lighter: #FEF1F0;
   --c-bg-dark: var(--surface-container-highest);
   --c-bg-darker: #EAD7D7;
-  --c-bg-navbar: var(--surface);
+  /* Navbar should match sidebar color in light mode */
+  --c-bg-navbar: var(--c-bg-sidebar);
   --c-bg-sidebar: var(--surface);
   --c-bg-arrow: var(--on-surface-variant);
 
@@ -204,7 +205,8 @@ html.dark {
   --c-bg-lighter: #201616;
   --c-bg-dark: var(--surface-container-highest);
   --c-bg-darker: #4A3F3F;
-  --c-bg-navbar: var(--surface-container);
+  /* Navbar should match sidebar color in dark mode */
+  --c-bg-navbar: var(--c-bg-sidebar);
   --c-bg-sidebar: var(--surface);
   --c-bg-arrow: var(--on-surface-variant);
 
@@ -279,8 +281,20 @@ html.dark {
 .vp-doc .audio-player { background-color: var(--surface-container); border: 1px solid var(--outline-variant); }
 
 /* Basic layout alignments with original theme */
-.VPNavBar { background-color: var(--c-bg-navbar); border-bottom: 1px solid var(--c-border); }
-.VPSidebar { background-color: var(--c-bg-sidebar); border-right: 1px solid var(--c-border); }
+.VPNavBar { background: var(--c-bg-navbar) !important; background-color: var(--c-bg-navbar) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom: none; border-radius: 0; overflow: visible; position: relative; z-index: 10; }
+.VPSidebar {
+  background-color: var(--c-bg-sidebar);
+  border-right: none;
+  /* only round the right side to avoid clashing with top navbar */
+  border-radius: 0 var(--shape-xlarge) var(--shape-xlarge) 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 20; /* above navbar background */
+  /* hide scrollbar cross-browser while preserving scrollability if enabled */
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.VPSidebar::-webkit-scrollbar { display: none; width: 0; height: 0; }
 .vp-doc a { color: var(--c-brand); }
 .vp-doc a:hover { color: var(--c-brand-light); }
 
@@ -332,8 +346,8 @@ html.dark {
 .vp-doc .custom-block.danger .custom-block-title { color: var(--c-danger-title); }
 
 /* Outline (table of contents) */
-.VPDocAsideOutline { background: transparent; border-left: 2px solid var(--c-border); }
-.VPDocAsideOutline .content { padding-left: 0.5rem; }
+.VPDocAsideOutline { background: transparent; border-left: none; }
+.VPDocAsideOutline .content { padding-left: 0.375rem; }
 .VPDocAsideOutline .content a { color: var(--on-surface-variant); }
 .VPDocAsideOutline .content a:hover { color: var(--c-text-accent); text-decoration: underline; }
 .VPDocAsideOutline .content .active a { color: var(--c-text-accent); font-weight: 600; }
@@ -343,7 +357,35 @@ html.dark .VPDocAsideOutline .content a:hover { color: var(--c-text-accent); }
 html.dark .VPDocAsideOutline .content .active a { color: var(--c-text-accent); }
 
 /* Elevation & shape on common containers */
-.VPNavBar { box-shadow: var(--elevation-1); }
+.VPNavBar { box-shadow: none; border-bottom: none; border-radius: 0; /* kill default divider */ --vp-c-divider: transparent; }
+
+/* Force navbar to have no shadow, no inner dividers */
+.VPNavBar,
+.VPNavBar .wrapper,
+.VPNavBar .container,
+.VPNavBar .content,
+.VPNavBar .content-body { box-shadow: none !important; background: var(--c-bg-navbar) !important; background-image: none !important; border-bottom: none !important; background-color: var(--c-bg-navbar) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.VPNavBar::before,
+.VPNavBar::after,
+.VPNavBar .content::before,
+.VPNavBar .content::after,
+.VPNavBar .content-body::before,
+.VPNavBar .content-body::after { display: none !important; content: none !important; }
+.VPNavBar { border-bottom: none !important; }
+.VPNavBar .divider,
+.VPNavBar .divider-line { display: none !important; }
+
+/* Ensure visible 1px bottom line across all navbar states */
+.VPNavBar .content-body { position: relative; }
+/* remove fallback divider line to avoid overlay conflicts */
+.VPNavBar .content-body::after { display: none !important; }
+
+/* Ensure nav screen overlays the divider line */
+#VPNavScreen,
+.VPNavScreen { position: relative; z-index: 1000; }
+
+/* When mobile nav screen is open, hide navbar divider to avoid overlap */
+.VPNavBar.screen-open { border-bottom: none !important; }
 .VPSidebar, .vp-doc .custom-block, .vp-doc pre, .vp-doc table { border-radius: var(--shape-medium); }
 
 /* Sidebar & Navbar interactive state layers */
@@ -425,7 +467,7 @@ html.dark .VPDocAsideOutline .content .active a { color: var(--c-text-accent); }
   background-color: var(--surface-container-highest);
   border: 1px solid var(--outline-variant);
   color: var(--on-surface-variant);
-  border-radius: var(--shape-small);
+  border-radius: var(--shape-medium);
 }
 .vp-doc .copy:hover { background-color: var(--c-hover-on-surface); }
 .vp-doc .copy:active { background-color: var(--c-pressed-on-surface); }
@@ -435,8 +477,8 @@ html.dark .vp-doc .copy { background-color: var(--surface-container-highest); bo
 .vp-doc blockquote {
   background-color: var(--c-bg-light);
   color: var(--c-text);
-  border-left: 3px solid var(--c-border);
-  border: 1px solid var(--c-border);
+  border-left: 2px solid var(--c-border);
+  border: none;
   border-radius: var(--shape-medium);
   padding: 0.6rem 0.9rem;
 }
@@ -447,18 +489,25 @@ html.dark .vp-doc blockquote {
 }
 
 /* Wikipedia-like table style with global border */
-.vp-doc table { width: 100%; border-collapse: collapse; border-spacing: 0; }
-.vp-doc table { background-color: var(--surface-container); border: 1px solid var(--c-border); }
-.vp-doc table th, .vp-doc table td { border: 1px solid var(--c-border); padding: 0.4rem 0.6rem; }
-.vp-doc table thead th { background-color: var(--primary-container); color: var(--on-primary-container); font-weight: 700; border-bottom: 2px solid var(--c-border); }
+.vp-doc table { width: 100%; border-collapse: separate; border-spacing: 0; overflow: hidden; }
+.vp-doc table { background-color: var(--surface-container); border: 1px solid var(--c-border); border-radius: var(--shape-medium); }
+.vp-doc table th, .vp-doc table td { border: none; padding: 0.5rem 0.75rem; }
+.vp-doc table thead th { background-color: var(--primary-container); color: var(--on-primary-container); font-weight: 700; border-bottom: 1px solid var(--c-border); }
+.vp-doc table tbody td { border-top: 1px solid var(--c-border); }
 .vp-doc table caption { caption-side: top; text-align: left; padding: 0.3rem 0; color: var(--on-surface-variant); }
+
+/* Subtle grid: row separators and column dividers */
+.vp-doc table tbody tr + tr td,
+.vp-doc table tbody tr + tr th { border-top: 1px solid var(--outline-variant); }
+.vp-doc table td + td,
+.vp-doc table th + th { border-left: 1px solid var(--outline-variant); }
 
 /* Zebra striping with MD3 surfaces */
 .vp-doc table tbody tr:nth-child(odd) { background-color: var(--c-bg-light); }
 html.dark .vp-doc table tbody tr:nth-child(odd) { background-color: var(--c-bg-dark); }
 
 /* Buttons (generic VitePress buttons e.g., hero/actions) */
-.VPButton { border-radius: 100px; box-shadow: var(--elevation-1); }
+.VPButton { border-radius: var(--shape-medium); box-shadow: var(--elevation-1); }
 .VPButton.brand { background-color: var(--primary); color: var(--on-primary); }
 .VPButton.brand:hover { background-color: var(--primary); }
 .VPButton.brand:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(var(--state-layers-on-primary-rgb), 0.30); }
@@ -467,18 +516,61 @@ html.dark .vp-doc table tbody tr:nth-child(odd) { background-color: var(--c-bg-d
 .VPButton.alt:active { background-color: var(--c-pressed-on-surface); }
 
 /* Badges */
-.VPBadge { border-radius: 999px; border: 1px solid var(--outline-variant); }
+.VPBadge { border-radius: var(--shape-medium); border: 1px solid var(--outline-variant); overflow: hidden; }
 .VPBadge.tip { background-color: var(--c-badge-tip); color: var(--c-badge-tip-text); }
 .VPBadge.warning { background-color: var(--c-badge-warning); color: var(--c-badge-warning-text); }
 .VPBadge.danger { background-color: var(--c-badge-danger); color: var(--c-badge-danger-text); }
 
 /* Search box */
-.VPLocalSearchBox input {
-  background-color: var(--surface-container);
+.VPLocalSearchBox .search-input {
+  background: transparent;
   color: var(--on-surface);
-  border: 1px solid var(--outline-variant);
-  border-radius: var(--shape-medium);
+  border: none;
+  border-radius: 0;
 }
+
+/* Navbar search button: unify to medium radius on desktop */
+@media (min-width: 768px) {
+  .DocSearch-Button {
+    border-radius: var(--shape-medium) !important;
+  }
+}
+.DocSearch-Button-Container { display: none; }
+
+/* Clean up default navbar divider lines */
+.VPNavBar .divider,
+.VPNavBar .divider-line { display: none !important; }
+.VPNavBar .menu + .translations::before,
+.VPNavBar .menu + .appearance::before,
+.VPNavBar .menu + .social-links::before { display: none !important; }
+
+/* Restore and style divider between menu and theme toggle */
+.VPNavBar .menu + .appearance::before {
+  content: "";
+  display: inline-block !important;
+  width: 1px;
+  height: 20px;
+  background-color: var(--c-border);
+  opacity: 0.6;
+  margin: 0 12px;
+}
+/* Add spacing so theme toggle sits further from last menu item */
+.VPNavBar .appearance { margin-left: 4px; }
+
+/* Local search modal: soften outer search bar */
+.VPLocalSearchBox .search-bar {
+  border-radius: var(--shape-medium) !important;
+  background: var(--surface-container) !important;
+  border-color: var(--outline-variant) !important;
+  box-shadow: none !important;
+}
+.VPLocalSearchBox .search-bar:focus-within {
+  border-color: var(--c-text-accent) !important;
+  box-shadow: none !important;
+}
+.VPLocalSearchBox { z-index: 999 !important; }
+.VPLocalSearchBox .search-actions button { border-radius: var(--shape-small); }
+.VPLocalSearchBox .shell { border-radius: var(--shape-medium) !important; }
 .VPLocalSearchBox input::placeholder { color: var(--on-surface-variant); }
 html.dark .VPLocalSearchBox input { background-color: var(--surface-container); color: var(--on-surface); border-color: var(--outline-variant); }
 
@@ -497,6 +589,14 @@ html.dark .VPLocalSearchBox input { background-color: var(--surface-container); 
 .vp-doc ul, .vp-doc ol { margin: 0.4em 0 0.4em 1.6em; }
 .vp-doc li > ul, .vp-doc li > ol { margin-left: 1.4em; }
 
+/* Wiki page layout refinements */
+.VPDoc .container .content .vp-doc { max-width: 900px; }
+.vp-doc > p:first-of-type { font-size: 17px; line-height: 1.85; }
+.vp-doc h2 { border-bottom: none; padding-bottom: 0; }
+.vp-doc p { margin: 0.5rem 0 0.9rem; }
+.vp-doc img { border: 1px solid var(--c-border); background: var(--c-bg); padding: 2px; border-radius: var(--shape-small); }
+.vp-doc sup { font-size: 0.75em; }
+
 /* Footer */
 .VPFooter { background-color: var(--c-bg); border-top: 1px solid var(--c-border); color: var(--c-text-light); }
 .VPFooter a { color: var(--c-text-accent); }
@@ -506,7 +606,7 @@ html.dark .VPFooter a { color: var(--c-text-accent); }
 html.dark .VPFooter a:hover { color: var(--c-brand-light); }
 
 /* Pager (Prev / Next) */
-.pager .item { background: var(--surface-container); border: 1px solid var(--outline-variant); border-radius: var(--shape-medium); }
+.pager .item { background: var(--surface-container); border: 1px solid var(--outline-variant); border-radius: var(--shape-medium); overflow: hidden; }
 .pager .item a { color: var(--on-surface); }
 .pager .item:hover { background: var(--c-hover-on-surface); }
 .pager .item:active { background: var(--c-pressed-on-surface); }
@@ -514,12 +614,12 @@ html.dark .pager .item { background: var(--surface-container); border-color: var
 html.dark .pager .item a { color: var(--on-surface); }
 
 /* Details & summary (MD3 containers) */
-.vp-doc details { background-color: var(--surface-container); border: 1px solid var(--outline-variant); border-radius: var(--shape-medium); box-shadow: var(--elevation-1); }
+.vp-doc details { background-color: var(--surface-container); border: none; border-radius: var(--shape-medium); box-shadow: var(--elevation-1); overflow: hidden; }
 .vp-doc summary { cursor: pointer; padding: 0.5rem 0.75rem; color: var(--on-surface); }
 .vp-doc details[open] { box-shadow: var(--elevation-3); }
 
 /* Horizontal rule */
-.vp-doc hr { border: none; border-top: 1px solid var(--outline-variant); opacity: 0.8; margin: 1.25rem 0; }
+.vp-doc hr { border: none; border-top: 1px solid var(--c-border); opacity: 0.35; margin: 1rem 0; }
 
 /* KBD */
 .vp-doc kbd { background: var(--surface-container-highest); color: var(--on-surface); border: 1px solid var(--outline-variant); border-radius: var(--shape-small); padding: 0.15rem 0.35rem; box-shadow: var(--elevation-1); }

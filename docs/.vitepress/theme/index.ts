@@ -10,6 +10,7 @@ import TextButton from './components/TextButton.vue'
 import ChatView from './components/ChatView.vue'
 import Slider from './components/Slider.vue'
 import SectionOverview from './components/SectionOverview.vue'
+import WikiInfoBox from './components/WikiInfoBox.vue'
 
 const theme: Theme = {
   ...DefaultTheme,
@@ -21,6 +22,7 @@ const theme: Theme = {
     app.component('Slider', Slider)
     // Expose overview block for use in Markdown or custom layouts
     app.component('SectionOverview', SectionOverview)
+    app.component('WikiInfoBox', WikiInfoBox)
   }
 }
 
