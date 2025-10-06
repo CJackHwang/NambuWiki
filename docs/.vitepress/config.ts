@@ -45,7 +45,9 @@ export default defineConfig({
     ['link', { rel: 'icon', href: '/images/ic_nambu_docs.png', type: 'image/png' }],
     // PWA: Web App Manifest + 主题色
     ['link', { rel: 'manifest', href: '/manifest.webmanifest' }],
-    ['meta', { name: 'theme-color', content: '#0b1e2d' }],
+    // Use background colors for system UI bars according to color scheme
+    ['meta', { name: 'theme-color', content: '#FFFCFB', media: '(prefers-color-scheme: light)' }],
+    ['meta', { name: 'theme-color', content: '#1A1111', media: '(prefers-color-scheme: dark)' }],
     // iOS 添加触控图标
     ['link', { rel: 'apple-touch-icon', href: '/images/apple-touch-icon.png' }]
   ],
