@@ -40,16 +40,24 @@ export default defineConfig({
   description: 'NambuWiki 文档与设定集',
   cleanUrls: true,
   lastUpdated: true,
+  head: [
+    // 使用指定的 PNG 作为站点 favicon
+    ['link', { rel: 'icon', href: '/images/ic_nambu_docs.png', type: 'image/png' }],
+    // PWA: Web App Manifest + 主题色
+    ['link', { rel: 'manifest', href: '/manifest.webmanifest' }],
+    ['meta', { name: 'theme-color', content: '#0b1e2d' }],
+    // iOS 添加触控图标
+    ['link', { rel: 'apple-touch-icon', href: '/images/apple-touch-icon.png' }]
+  ],
   markdown: {
     theme: {
       light: 'material-theme-lighter',
       dark: 'material-theme-darker'
     }
   },
-  // 使用旧 VuePress 公共资源目录，保持 /images/* 路径兼容
+  // 使用 VitePress 的公共资源目录
   vite: {
-    // 直接复用原 VuePress 静态资源目录（相对于 docs 根）
-    publicDir: path.resolve(DOCS_ROOT, '.vuepress/public')
+    publicDir: path.resolve(__dirname, 'public')
   },
   themeConfig: {
     logo: '/images/ic_nambu_docs.png',

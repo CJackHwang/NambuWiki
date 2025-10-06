@@ -39,13 +39,13 @@ jobs:
           NODE_OPTIONS: --max_old_space_size=8192
         run: |-
           pnpm run docs:build
-          > docs/.vuepress/dist/.nojekyll
+          > docs/.vitepress/dist/.nojekyll
 
       - name: 部署文档
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/.vuepress/dist
+          publish_dir: ./docs/.vitepress/dist
           cname: nd.cjack.cfd
           user_name: 'WebsiteMamba'
           user_email: 'mamba@gov.nb'

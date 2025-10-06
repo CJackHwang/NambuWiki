@@ -1,6 +1,6 @@
 # 公共资源与外部链接 (Public)
 
-> 本页面用于统一展示对外的公共入口与外链聚合，和站点内部的“资源存储目录”（如 `.vuepress/public` 中的图片、媒体等静态文件）严格区分。
+> 本页面用于统一展示对外的公共入口与外链聚合，和站点内部的“资源存储目录”（如 `.vitepress/public` 中的图片、媒体等静态文件）严格区分。
 
 ## 站点与应用
 - 南武文库 App 客户端：<https://nambu-gov.my.canvasite.cn/app>
@@ -15,4 +15,3 @@
 - 反馈问题（占位）：<https://example.com/issues>
 
 <SectionOverview />
-

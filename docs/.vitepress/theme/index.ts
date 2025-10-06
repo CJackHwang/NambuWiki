@@ -23,6 +23,26 @@ const theme: Theme = {
     // Expose overview block for use in Markdown or custom layouts
     app.component('SectionOverview', SectionOverview)
     app.component('WikiInfoBox', WikiInfoBox)
+  },
+  setup() {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then((reg) => {
+          // 当发现新 SW 时，立即跳过等待并尝试更新页面
+          if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          reg.addEventListener('updatefound', () => {
+            const sw = reg.installing;
+            if (!sw) return;
+            sw.addEventListener('statechange', () => {
+              if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+                // 新版本安装完成，提示或直接刷新
+                window.location.reload();
+              }
+            });
+          });
+        }).catch(() => {});
+      });
+    }
   }
 }
 
