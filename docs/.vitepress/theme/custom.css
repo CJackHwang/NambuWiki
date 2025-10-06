@@ -217,8 +217,9 @@ html.dark {
   --c-text-lightest: #A09090;
   --c-text-quote: var(--on-surface-variant);
 
+  /* Use outline-variant for better contrast in dark mode */
+  --c-border-dark: var(--outline-variant);
   --c-border: var(--outline-variant);
-  --c-border-dark: #3F3333;
 
   --c-tip: #81C784;
   --c-tip-bg: #1B311D;
@@ -281,7 +282,7 @@ html.dark {
 .vp-doc .audio-player { background-color: var(--surface-container); border: 1px solid var(--outline-variant); }
 
 /* Basic layout alignments with original theme */
-.VPNavBar { background: var(--c-bg-navbar) !important; background-color: var(--c-bg-navbar) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; border-bottom: none; border-radius: 0; overflow: visible; position: relative; z-index: 10; }
+.VPNavBar { background: var(--c-bg-navbar); background-color: var(--c-bg-navbar); backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom: none; border-radius: 0; overflow: visible; position: relative; z-index: 10; }
 .VPSidebar {
   background-color: var(--c-bg-sidebar);
   border-right: none;
@@ -294,9 +295,10 @@ html.dark {
   -ms-overflow-style: none; /* IE/Edge */
   scrollbar-width: none; /* Firefox */
 }
+/* Sidebar right edge hairline divider, matching navbar */
+.VPSidebar { box-shadow: none; border-right: 1px solid var(--c-border); }
 .VPSidebar::-webkit-scrollbar { display: none; width: 0; height: 0; }
-.vp-doc a { color: var(--c-brand); }
-.vp-doc a:hover { color: var(--c-brand-light); }
+/* Link styles consolidated below using brand variables */
 
 /* Primary surfaces for hero/cards (softened) */
 .VPHome .VPHero, .VPDoc .container .content .VPCard {
@@ -308,18 +310,10 @@ html.dark {
 .VPHome .VPHero .name, .VPHome .VPHero .text { color: var(--on-surface); }
 .VPHome .VPHero .name span { color: var(--primary); }
 
-/* MD3 container variants (reduce contrast, keep subtle) */
-.VPHome .VPHero { background: var(--c-bg-alt); color: var(--on-surface); }
-.VPHome .VPHero .name, .VPHome .VPHero .text { color: var(--on-surface); }
-.VPHome .VPHero .name span { color: var(--primary); }
-.VPDoc .container .content .VPCard { background: var(--c-bg-alt); color: var(--on-surface); }
+/* Card text color */
 .VPDoc .container .content .VPCard .text { color: var(--on-surface); }
 
-/* Wikipedia-like link behavior */
-.vp-doc a { color: #0645ad; }
-.vp-doc a:visited { color: #0b0080; }
-.vp-doc a:hover { text-decoration: underline; }
-.vp-doc a:active { color: #faa700; }
+/* Use brand palette variables for links; remove hard-coded wiki colors */
 
 /* Custom blocks (tip/warning/danger) — wiki-like, less boxy */
 .vp-doc .custom-block {
@@ -348,6 +342,13 @@ html.dark {
 /* Outline (table of contents) */
 .VPDocAsideOutline { background: transparent; border-left: none; }
 .VPDocAsideOutline .content { padding-left: 0.375rem; }
+.VPDocAsideOutline .outline-title,
+.VPDocAsideOutline .title {
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--c-border);
+  opacity: 0.6;
+}
 .VPDocAsideOutline .content a { color: var(--on-surface-variant); }
 .VPDocAsideOutline .content a:hover { color: var(--c-text-accent); text-decoration: underline; }
 .VPDocAsideOutline .content .active a { color: var(--c-text-accent); font-weight: 600; }
@@ -356,37 +357,40 @@ html.dark .VPDocAsideOutline .content a { color: var(--on-surface-variant); }
 html.dark .VPDocAsideOutline .content a:hover { color: var(--c-text-accent); }
 html.dark .VPDocAsideOutline .content .active a { color: var(--c-text-accent); }
 
+/* Local nav "On this page" divider: unify dark mode color with theme borders */
+html.dark .VPLocalNav { border-bottom-color: var(--c-border); }
+
 /* Elevation & shape on common containers */
 .VPNavBar { box-shadow: none; border-bottom: none; border-radius: 0; /* kill default divider */ --vp-c-divider: transparent; }
 
 /* Force navbar to have no shadow, no inner dividers */
 .VPNavBar,
 .VPNavBar .wrapper,
-.VPNavBar .container,
 .VPNavBar .content,
-.VPNavBar .content-body { box-shadow: none !important; background: var(--c-bg-navbar) !important; background-image: none !important; border-bottom: none !important; background-color: var(--c-bg-navbar) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.VPNavBar .content-body { box-shadow: none; background: var(--c-bg-navbar); background-image: none; border-bottom: none; background-color: var(--c-bg-navbar); backdrop-filter: none; -webkit-backdrop-filter: none; }
 .VPNavBar::before,
 .VPNavBar::after,
 .VPNavBar .content::before,
 .VPNavBar .content::after,
 .VPNavBar .content-body::before,
-.VPNavBar .content-body::after { display: none !important; content: none !important; }
-.VPNavBar { border-bottom: none !important; }
+.VPNavBar .content-body::after { display: none; content: none; }
+.VPNavBar { border-bottom: none; }
 .VPNavBar .divider,
-.VPNavBar .divider-line { display: none !important; }
+.VPNavBar .divider-line { display: none; }
 
 /* Ensure visible 1px bottom line across all navbar states */
 .VPNavBar .content-body { position: relative; }
 /* remove fallback divider line to avoid overlay conflicts */
-.VPNavBar .content-body::after { display: none !important; }
+.VPNavBar .content-body::after { display: none; }
 
 /* Ensure nav screen overlays the divider line */
 #VPNavScreen,
 .VPNavScreen { position: relative; z-index: 1000; }
+/* Mobile nav overlay: ensure stacking only; no divider here */
 
 /* When mobile nav screen is open, hide navbar divider to avoid overlap */
-.VPNavBar.screen-open { border-bottom: none !important; }
-.VPSidebar, .vp-doc .custom-block, .vp-doc pre, .vp-doc table { border-radius: var(--shape-medium); }
+.VPNavBar.screen-open { border-bottom: none; }
+.vp-doc .custom-block, .vp-doc pre, .vp-doc table { border-radius: var(--shape-medium); }
 
 /* Sidebar & Navbar interactive state layers */
 .VPNavBar a, .VPSidebar a {
@@ -416,27 +420,7 @@ html.dark .VPDocAsideOutline .content .active a { color: var(--c-text-accent); }
   border-left: 3px solid var(--primary);
 }
 
-/* Wikipedia-like content width and typography */
-.vp-doc {
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.vp-doc h1, .vp-doc h2, .vp-doc h3, .vp-doc h4, .vp-doc h5, .vp-doc h6 {
-  color: var(--on-surface);
-  margin-top: 1em;
-  margin-bottom: 0.4em;
-}
-.vp-doc h1 { font-size: 1.8rem; font-weight: 700; }
-.vp-doc h2 { font-size: 1.5rem; font-weight: 700; }
-.vp-doc h3 { font-size: 1.2rem; font-weight: 600; }
-.vp-doc h4 { font-size: 1.1rem; font-weight: 600; }
-.vp-doc h5 { font-size: 1rem; font-weight: 600; }
-.vp-doc h6 { font-size: 0.95rem; font-weight: 600; }
-.vp-doc p, .vp-doc li { font-size: 14px; line-height: 1.6; color: var(--c-text); }
-
-.vp-doc ul, .vp-doc ol { margin: 0.6em 0 0.6em 2em; }
-.vp-doc li > ul, .vp-doc li > ol { margin-left: 1.6em; }
+/* Typography consolidated later with a single scale */
 
 /* Inline code */
 .vp-doc code:not(pre code) {
@@ -477,8 +461,8 @@ html.dark .vp-doc .copy { background-color: var(--surface-container-highest); bo
 .vp-doc blockquote {
   background-color: var(--c-bg-light);
   color: var(--c-text);
-  border-left: 2px solid var(--c-border);
   border: none;
+  border-left: 2px solid var(--c-border);
   border-radius: var(--shape-medium);
   padding: 0.6rem 0.9rem;
 }
@@ -489,8 +473,15 @@ html.dark .vp-doc blockquote {
 }
 
 /* Wikipedia-like table style with global border */
-.vp-doc table { width: 100%; border-collapse: separate; border-spacing: 0; overflow: hidden; }
-.vp-doc table { background-color: var(--surface-container); border: 1px solid var(--c-border); border-radius: var(--shape-medium); }
+.vp-doc table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  background-color: var(--surface-container);
+  border: 1px solid var(--c-border);
+  border-radius: var(--shape-medium);
+}
 .vp-doc table th, .vp-doc table td { border: none; padding: 0.5rem 0.75rem; }
 .vp-doc table thead th { background-color: var(--primary-container); color: var(--on-primary-container); font-weight: 700; border-bottom: 1px solid var(--c-border); }
 .vp-doc table tbody td { border-top: 1px solid var(--c-border); }
@@ -532,22 +523,19 @@ html.dark .vp-doc table tbody tr:nth-child(odd) { background-color: var(--c-bg-d
 /* Navbar search button: unify to medium radius on desktop */
 @media (min-width: 768px) {
   .DocSearch-Button {
-    border-radius: var(--shape-medium) !important;
+    border-radius: var(--shape-medium);
   }
 }
 .DocSearch-Button-Container { display: none; }
 
-/* Clean up default navbar divider lines */
-.VPNavBar .divider,
-.VPNavBar .divider-line { display: none !important; }
+/* Hide navbar pseudo dividers except the appearance one we redraw later */
 .VPNavBar .menu + .translations::before,
-.VPNavBar .menu + .appearance::before,
-.VPNavBar .menu + .social-links::before { display: none !important; }
+.VPNavBar .menu + .social-links::before { display: none; }
 
 /* Restore and style divider between menu and theme toggle */
 .VPNavBar .menu + .appearance::before {
   content: "";
-  display: inline-block !important;
+  display: inline-block;
   width: 1px;
   height: 20px;
   background-color: var(--c-border);
@@ -559,18 +547,18 @@ html.dark .vp-doc table tbody tr:nth-child(odd) { background-color: var(--c-bg-d
 
 /* Local search modal: soften outer search bar */
 .VPLocalSearchBox .search-bar {
-  border-radius: var(--shape-medium) !important;
-  background: var(--surface-container) !important;
-  border-color: var(--outline-variant) !important;
-  box-shadow: none !important;
+  border-radius: var(--shape-medium);
+  background: var(--surface-container);
+  border-color: var(--outline-variant);
+  box-shadow: none;
 }
 .VPLocalSearchBox .search-bar:focus-within {
-  border-color: var(--c-text-accent) !important;
-  box-shadow: none !important;
+  border-color: var(--c-text-accent);
+  box-shadow: none;
 }
-.VPLocalSearchBox { z-index: 999 !important; }
+.VPLocalSearchBox { z-index: 999; }
 .VPLocalSearchBox .search-actions button { border-radius: var(--shape-small); }
-.VPLocalSearchBox .shell { border-radius: var(--shape-medium) !important; }
+.VPLocalSearchBox .shell { border-radius: var(--shape-medium); }
 .VPLocalSearchBox input::placeholder { color: var(--on-surface-variant); }
 html.dark .VPLocalSearchBox input { background-color: var(--surface-container); color: var(--on-surface); border-color: var(--outline-variant); }
 
@@ -633,3 +621,28 @@ html.dark .pager .item a { color: var(--on-surface); }
 /* Navbar brand spacing and subtle elevation */
 .VPNavBar.has-sidebar .content { box-shadow: none; }
 .VPNavBar .title { letter-spacing: 0.2px; }
+
+/* Hairline divider via inset shadow to avoid layout/stacking issues */
+.VPNavBar {
+  border-bottom: none;
+  box-shadow: inset 0 -1px 0 0 var(--c-border); /* 1px hairline */
+  z-index: 200; /* ensure above adjacent content */
+}
+/* Also apply hairline to inner content container */
+.VPNavBar .content { box-shadow: inset 0 -1px 0 0 var(--c-border); }
+/* Extra redundancy: ensure inner wrappers carry the hairline too */
+.VPNavBar .wrapper,
+.VPNavBar .content-body { box-shadow: inset 0 -1px 0 0 var(--c-border); }
+
+/* Theme toggle dropdown menu hairline borders */
+.VPNavBar .appearance .VPSwitchAppearance,
+.VPNavBar .appearance .menu,
+.VPNavBar .appearance .dropdown,
+.VPNavBar .appearance .popover,
+.VPNavBar .appearance .items,
+.DocSearch-Modal { border: 1px solid var(--c-border); box-shadow: none; }
+/* Hide hairline when mobile nav screen is open */
+.VPNavBar.screen-open { border-bottom: none; box-shadow: none; }
+
+/* Ensure sidebar right-edge hairline persists without !important by increasing specificity */
+.VPSidebar.VPSidebar { box-shadow: none; border-right: 1px solid var(--c-border); }
